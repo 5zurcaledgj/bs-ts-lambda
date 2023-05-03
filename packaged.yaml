@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Handler: dist/lambda.handler
-      CodeUri: s3://bs-ts/07d9d0c9006e6491adf51f44628f162e
+      CodeUri: s3://bs-ts/30ad392cc32f5cbbd3f06b1f31e5eceb
       Environment:
         Variables:
           BUCKET_NAME: bs-ts
