@@ -10,7 +10,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const list = await s3.listObjects({ Bucket: bucket }).promise();
     return {
       statusCode: 200,
-      body: JSON.stringify(list),
+      body: 'testing actions',
     };
   } catch (error) {
     const message = (error as Error).message;
