@@ -36,6 +36,7 @@ jobs:
         zip -r multiplyByTwo.zip multiplyByTwo.js ../../node_modules
         zip -r checkGreaterThanTen.zip checkGreaterThanTen.js ../../node_modules
         cd ../../
+        pwd
 
 
     - name: Set up AWS credentials
