@@ -24,19 +24,11 @@ jobs:
     - name: Compile TypeScript
       run: npm run build
 
-    - name: Package Lambda function
+    - name: Package Lambda functions
       run: |
-        mkdir package
-        cp -r dist package
-        cp package.json package
-        cp package-lock.json package
-        cd package
-        npm ci --production
         cd dist/lambdas
-        zip -r multiplyByTwo.zip multiplyByTwo.js ../../node_modules
-        zip -r checkGreaterThanTen.zip checkGreaterThanTen.js ../../node_modules
-        cd ../../
-        pwd
+        zip -r multiplyByTwo.zip multiplyByTwo.js ../node_modules
+        zip -r checkGreaterThanTen.zip checkGreaterThanTen.js ../node_modules
 
 
     - name: Set up AWS credentials
