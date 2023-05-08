@@ -32,8 +32,10 @@ jobs:
         cp package-lock.json package
         cd package
         npm ci --production
-        zip -r ../lambda.zip .
-        cd ..
+        cd dist/lambdas
+        zip -r multiplyByTwo.zip multiplyByTwo.js ../../node_modules
+        zip -r checkGreaterThanTen.zip checkGreaterThanTen.js ../../node_modules
+        cd ../../
 
 
     - name: Set up AWS credentials
@@ -45,8 +47,8 @@ jobs:
 
     - name: Deploy Lambda functions
       run: |
-        aws lambda update-function-code --function-name MultiplyByTwoFunction --zip-file fileb://dist/lambdas/multiplyBy.js --publish
-        aws lambda update-function-code --function-name CheckGreaterThanTenFunction --zip-file fileb://dist/lambdas/checkGreaterThanTen.js --publish
+        aws lambda update-function-code --function-name MultiplyByTwoFunction --zip-file fileb://dist/lambdas/multiplyBy.zip --publish
+        aws lambda update-function-code --function-name CheckGreaterThanTenFunction --zip-file fileb://dist/lambdas/checkGreaterThanTen.zip --publish
 
     - name: Deploy Step Function
       run: |
