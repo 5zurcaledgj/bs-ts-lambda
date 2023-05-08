@@ -1,0 +1,36 @@
+{
+  "StartAt": "MultiplyByTwo",
+  "States": {
+    "MultiplyByTwo": {
+      "Type": "Task",
+      "Resource": "MULTIPLY_BY_TWO_ARN",
+      "Next": "CheckGreaterThanTen"
+    },
+    "CheckGreaterThanTen": {
+      "Type": "Task",
+      "Resource": "CHECK_GREATER_THAN_TEN_ARN",
+      "Next": "IsGreaterThanTen"
+    },
+    "IsGreaterThanTen": {
+      "Type": "Choice",
+      "Choices": [
+        {
+          "Variable": "$.isGreaterThanTen",
+          "BooleanEquals": true,
+          "Next": "GreaterThanTen"
+        }
+      ],
+      "Default": "LessThanOrEqualToTen"
+    },
+    "GreaterThanTen": {
+      "Type": "Pass",
+      "Result": "The result is greater than 10.",
+      "End": true
+    },
+    "LessThanOrEqualToTen": {
+      "Type": "Pass",
+      "Result": "The result is less than or equal to 10.",
+      "End": true
+    }
+  }
+}

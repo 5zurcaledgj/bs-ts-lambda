@@ -1,4 +1,4 @@
-name: Deploy Lambda
+name: Deploy Step Function
 
 on:
   push:
@@ -10,43 +10,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: 14.x
+        node-version: 14
 
     - name: Install dependencies
-      run: |
-        npm ci
+      run: npm ci
 
     - name: Compile TypeScript
-      run: |
-        npm run build
+      run: npm run build
 
-    - name: Package Lambda function
-      run: |
-        mkdir package
-        cp -r dist package
-        cp package.json package
-        cp package-lock.json package
-        cd package
-        npm ci --production
-        zip -r ../lambda.zip .
-        cd ..
+    - name: Set up AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
 
-    - name: Deploy Lambda function
+    - name: Deploy Lambda functions
       run: |
-        # Replace FUNCTION_NAME with your Lambda function name
-        FUNCTION_NAME=typescript-lambda-stack-TypeScriptFunction-miI1kqzAXRBy
+        aws lambda update-function-code --function-name MultiplyByTwoFunction --zip-file fileb://dist/lambdas/multiplyBy.js --publish
+        aws lambda update-function-code --function-name CheckGreaterThanTenFunction --zip-file fileb://dist/lambdas/checkGreaterThanTen.js --publish
 
-        # Update or create the Lambda function
-        aws lambda update-function-code \
-          --function-name $FUNCTION_NAME \
-          --zip-file fileb://lambda.zip
-      env:
-        AWS_REGION: us-east-1
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    - name: Deploy Step Function
+      run: |
+            aws stepfunctions update-state-machine --state-machine-arn MultiplyByTwo --definition file://src/stateMachineDefinition.json
