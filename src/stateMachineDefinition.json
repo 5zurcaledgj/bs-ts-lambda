@@ -3,12 +3,12 @@
   "States": {
     "MultiplyByTwo": {
       "Type": "Task",
-      "Resource": "MULTIPLY_BY_TWO_ARN",
+      "Resource": "arn:aws:lambda:us-east-1:728900521350:function:MultiplyByTwoFunction",
       "Next": "CheckGreaterThanTen"
     },
     "CheckGreaterThanTen": {
       "Type": "Task",
-      "Resource": "CHECK_GREATER_THAN_TEN_ARN",
+      "Resource": "arn:aws:lambda:us-east-1:728900521350:function:CheckGreaterThanTenFunction",
       "Next": "IsGreaterThanTen"
     },
     "IsGreaterThanTen": {
