@@ -40,8 +40,9 @@ jobs:
 
     - name: Deploy Lambda functions
       run: |
-        aws lambda update-function-code --function-name MultiplyByTwoFunction --zip-file fileb://dist/lambdas/multiplyByTwo.zip --publish
-        aws lambda update-function-code --function-name CheckGreaterThanTenFunction --zip-file fileb://dist/lambdas/checkGreaterThanTen.zip --publish
+        chmod +x deploy-lambda.sh
+        ./deploy-lambda.sh MultiplyByTwoFunction fileb://dist/lambdas/multiplyByTwo.zip multiplyByTwo
+        ./deploy-lambda.sh CheckGreaterThanTenFunction fileb://dist/lambdas/checkGreaterThanTen.zip checkGreaterThanTen
 
     - name: Deploy Step Function
       run: |
