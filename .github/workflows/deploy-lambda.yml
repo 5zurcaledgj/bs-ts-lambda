@@ -46,4 +46,4 @@ jobs:
 
     - name: Deploy Step Function
       run: |
-            aws stepfunctions update-state-machine --state-machine-arn MultiplyByTwo --definition file://src/stateMachineDefinition.json
+        aws stepfunctions update-state-machine --state-machine-arn  arn:aws:states:us-east-1:728900521350:stateMachine:HelloWorld --definition file://src/stateMachineDefinition.json
