@@ -5,8 +5,5 @@ export const handler: APIGatewayProxyHandler = async (event: any, context: any) 
   const number = parseInt(event.body.result, 10);
   const isGreaterThanTen = number > 10;
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ isGreaterThanTen }),
-  };
+  return { isGreaterThanTen };
 };
